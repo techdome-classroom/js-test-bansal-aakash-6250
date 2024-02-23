@@ -3,17 +3,25 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    let ans=true;
-    for (let i = 0; i < s.length; i++) {
-        for (let j = i+1; j < s.length; j++) {
-            if(s.charAt(i)===s.charAt(j)){
-                continue
-            }
-
-            
-        }
-        
+    const stack=[];
+    const pairs={
+        '(':')','[':']','{':'}'
     }
+
+    for(let char of s){
+        if(char in pairs){
+            stack.push(char);
+        }else if(char ===')' || char==='}' || char===']'){
+            const top=stack.pop();
+            if(!top || pairs[top]!==char){
+                return false;
+            }
+        }
+    }
+
+    return stack.length===0;
+
+    
 };
 
 module.exports = { isValid };
